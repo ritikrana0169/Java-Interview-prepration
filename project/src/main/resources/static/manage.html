@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Manager</title>
+</head>
+<body>
+    <script>
+        function handleSubmit(event) {
+          event.preventDefault(); 
+    
+          var ques = document.getElementById("ques").value;
+          var ans = document.getElementById("ans").value;
+          var lev = document.getElementById("level").value;
+    
+        
+          var data = {
+            question: ques,
+            answer: ans,
+            level: lev
+          };
+    
+          // Send data to API
+          fetch('http://localhost:8080/questions', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+          })
+          .then(response => {
+            if (response.ok) {
+              console.log('Data sent successfully');
+              
+            } else {
+              console.log('Error sending data');
+            }
+          })
+          .catch(error => {
+            console.log('Error:', error);
+          });
+console.log(data);
+        }
+      </script>
+    </head>
+    <body>
+      <h1>Form</h1>
+      <form onsubmit="handleSubmit(event)">
+        <label for="ques">Type Question</label>
+        <input type="text" id="ques" name="ques" required><br><br>
+    
+        <label for="ans">Type Answer</label>
+        <input type="text" id="ans" name="ans" required><br><br>
+    
+        <label for="level">Level</label>
+        <input type="number" id="level" name="level" required><br><br>
+    
+        <input type="submit" value="Submit">
+      </form>
+</body>
+</html>
